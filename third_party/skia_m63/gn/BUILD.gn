@@ -53,7 +53,7 @@ config("default") {
       "WIN32_LEAN_AND_MEAN",
       "NOMINMAX",
     ]
-
+    _win10_sdk = get_path_info("../win10", "abspath")
     _include_dirs = [
       #2017
       "$windk/VC/Tools/MSVC/14.10.25017/include",
@@ -63,23 +63,18 @@ config("default") {
 
       # For local builds.
       # 2017
-      "$windk/../../../Windows Kits/10/Include/10.0.14393.0/shared",
-      "$windk/../../../Windows Kits/10/Include/10.0.14393.0/ucrt",
-      "$windk/../../../Windows Kits/10/Include/10.0.14393.0/um",
-      "$windk/../../../Windows Kits/10/Include/10.0.14393.0/winrt",
+      "$_win10_sdk/Include/10.0.14393.0/shared",
+      "$_win10_sdk/Include/10.0.14393.0/ucrt",
+      "$_win10_sdk/Include/10.0.14393.0/um",
+      "$_win10_sdk/Include/10.0.14393.0/winrt",
 
       # 2015
       "$windk/../Windows Kits/8.1/Include/shared",
-      "$windk/../Windows Kits/10/Include/10.0.10150.0/ucrt",
+      "$windk/../Windows Kits/10/Include/10.0.10240.0/ucrt",
       "$windk/../Windows Kits/8.1/Include/um",
       "$windk/../Windows Kits/8.1/Include/winrt",
-
-      # For builds using win_toolchain asset.
-      "$windk/win_sdk/Include/10.0.14393.0/shared",
-      "$windk/win_sdk/Include/10.0.14393.0/ucrt",
-      "$windk/win_sdk/Include/10.0.14393.0/um",
-      "$windk/win_sdk/Include/10.0.14393.0/winrt",
     ]
+    
     if (is_clang) {
       foreach(dir, _include_dirs) {
         cflags += [
@@ -94,16 +89,12 @@ config("default") {
     lib_dirs = [
       # For local builds.
       # 2017
-      "$windk/../../../Windows Kits/10/Lib/10.0.14393.0/ucrt/$target_cpu",
-      "$windk/../../../Windows Kits/10/Lib/10.0.14393.0/um/$target_cpu",
+      "$_win10_sdk/Lib/10.0.14393.0/ucrt/$target_cpu",
+      "$_win10_sdk/Lib/10.0.14393.0/um/$target_cpu",
 
       #2015
-      "$windk/../Windows Kits/10/Lib/10.0.10150.0/ucrt/$target_cpu",
+      "$windk/../Windows Kits/10/Lib/10.0.10240.0/ucrt/$target_cpu",
       "$windk/../Windows Kits/8.1/Lib/winv6.3/um/$target_cpu",
-
-      # For builds using win_toolchain asset.
-      "$windk/win_sdk/Lib/10.0.14393.0/ucrt/$target_cpu",
-      "$windk/win_sdk/Lib/10.0.14393.0/um/$target_cpu",
     ]
 
     #2017
